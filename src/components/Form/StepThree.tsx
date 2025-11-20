@@ -187,7 +187,6 @@ export default function StepThree({
               <span className="block text-xs font-bold text-gray-900 uppercase mb-1">
                 Reason for Use
               </span>
-              <p className="text-gray-600">{values.seekingReason}</p>
             </div>
           </div>
         </div>
