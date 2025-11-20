@@ -56,10 +56,6 @@ const generatePDF = async (data: PatientFormData) => {
   const splitSymptoms = doc.splitTextToSize(`Symptoms: ${data.symptoms}`, 170);
   doc.text(splitSymptoms, 20, 130);
 
-  const currentY = 130 + splitSymptoms.length * 7;
-
-  doc.text(`Reason: ${data.seekingReason}`, 20, currentY + 10);
-
   // 4. Legal
   doc.setFontSize(10);
   doc.setTextColor(100, 100, 100);
@@ -173,7 +169,6 @@ export default function PatientForm() {
       address: "",
       medicalCondition: "",
       symptoms: "",
-      seekingReason: "",
       medicalHistory: "",
       consent: false,
       ageConsent: false,
@@ -199,7 +194,7 @@ export default function PatientForm() {
         "aadhaar_number",
       ];
     } else if (currentStep === 2) {
-      fieldsToValidate = ["medicalCondition", "symptoms", "seekingReason"];
+      fieldsToValidate = ["medicalCondition", "symptoms"];
     } else if (currentStep === 3) {
       fieldsToValidate = ["consent", "ageConsent"];
     }
@@ -265,15 +260,16 @@ export default function PatientForm() {
                   disabled={isSubmitting}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
-                  className="mt-8 w-full h-12 text-lg font-semibold rounded-xl shadow-lg text-white 
+                  // FIXED: h-auto, padding, responsive text size
+                  className="mt-8 w-full h-auto min-h-[3rem] py-3 px-4 text-base md:text-lg font-semibold rounded-xl shadow-lg text-white 
                              bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
-                             transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                             transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 whitespace-normal leading-tight"
                 >
                   {isSubmitting ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
                   ) : (
                     <>
-                      Continue to Medical Information
+                      <span>Continue to Medical Information</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -284,7 +280,7 @@ export default function PatientForm() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="w-5 h-5 ml-2"
+                        className="w-5 h-5 ml-2 shrink-0"
                       >
                         <path d="M5 12h14"></path>
                         <path d="m12 5 7 7-7 7"></path>
@@ -304,9 +300,9 @@ export default function PatientForm() {
                     onClick={() => setCurrentStep(1)}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
-                    className="w-full h-12 text-lg font-semibold rounded-xl shadow-sm border-2 border-gray-200 
-                                   bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300
-                                   transition-all duration-200 flex items-center justify-center gap-2"
+                    className="w-full h-auto min-h-[3rem] py-3 px-4 text-base md:text-lg font-semibold rounded-xl shadow-sm border-2 border-gray-200 
+                               bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300
+                               transition-all duration-200 flex items-center justify-center gap-2"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +314,7 @@ export default function PatientForm() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="w-5 h-5 mr-1"
+                      className="w-5 h-5 mr-1 shrink-0"
                     >
                       <path d="m15 18-6-6 6-6" />
                     </svg>
@@ -331,9 +327,9 @@ export default function PatientForm() {
                     onClick={handleNextStep}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
-                    className="w-full h-12 text-lg font-semibold rounded-xl shadow-lg text-white 
-                                   bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700
-                                   transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full h-auto min-h-[3rem] py-3 px-4 text-base md:text-lg font-semibold rounded-xl shadow-lg text-white 
+                               bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700
+                               transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 whitespace-normal leading-tight"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
@@ -351,7 +347,7 @@ export default function PatientForm() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="w-5 h-5 ml-2"
+                        className="w-5 h-5 ml-2 shrink-0"
                       >
                         <path d="M5 12h14"></path>
                         <path d="m12 5 7 7-7 7"></path>

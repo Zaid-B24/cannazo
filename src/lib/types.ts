@@ -43,7 +43,6 @@ export const PatientFormValidation = z.object({
   aadhaar_image_url: z.any().optional(),
   medicalCondition: z.string().min(3, "Medical Condition is required."),
   symptoms: z.string().min(3, "Please describe your symptoms."),
-  seekingReason: z.string(),
   medicalHistory: z.string().optional(),
   consent: z.boolean().refine((val) => val === true, {
     message: "You must consent to continue.",

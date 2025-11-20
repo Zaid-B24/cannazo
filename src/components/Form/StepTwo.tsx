@@ -61,13 +61,13 @@ export default function StepTwo({ methods }: StepTwoProps) {
       <QuickAddSymptoms methods={methods} />
 
       {/* 4. Reason for Seeking Treatment */}
-      <CustomFormField
+      {/* <CustomFormField
         control={control}
         fieldType={FormFieldType.TEXTAREA}
         name="seekingReason"
         label="Why are you seeking cannabis-based treatment?"
         placeholder="Please explain why you believe cannabis-based medicine may help your condition, what other treatments you've tried, and what you hope to achieve..."
-      />
+      /> */}
 
       {/* 5. Medical History (Optional) */}
       <CustomFormField
