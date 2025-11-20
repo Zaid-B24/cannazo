@@ -183,11 +183,6 @@ export default function StepThree({
               </span>
               <p className="text-gray-600">{values.symptoms}</p>
             </div>
-            <div>
-              <span className="block text-xs font-bold text-gray-900 uppercase mb-1">
-                Reason for Use
-              </span>
-            </div>
           </div>
         </div>
       </div>
