@@ -15,7 +15,8 @@ export const FormFieldType = {
 export type FormFieldType = (typeof FormFieldType)[keyof typeof FormFieldType];
 
 export interface CustomProps {
-  control: Control<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   name: string;
   label?: string;
   placeholder?: string;
@@ -35,15 +36,16 @@ export const PatientFormValidation = z.object({
   email: z.string().email("Invalid email address."),
   phone: z.string().min(10, "Phone number is required."),
   gender: z.enum(["Male", "Female", "Other"]),
-  weight: z.string().min(1, "Weight is required"),
-  height: z.string().min(1, "Height is required"),
+  weight: z.string().optional(),
+  height: z.string().optional(),
   aadhaar_number: z.string().length(12, "Aadhaar must be 12 digits."),
   date_of_birth: z.date(),
-  address: z.string(),
+  address: z.string().optional(),
   aadhaar_image_url: z.any().optional(),
   medicalCondition: z.string().min(3, "Medical Condition is required."),
-  symptoms: z.string().min(3, "Please describe your symptoms."),
+  symptoms: z.string().optional(),
   medicalHistory: z.string().optional(),
+  selectedProducts: z.array(z.string()).min(1, "Please select at least one product."),
   consent: z.boolean().refine((val) => val === true, {
     message: "You must consent to continue.",
   }),

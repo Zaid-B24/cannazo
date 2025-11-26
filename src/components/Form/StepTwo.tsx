@@ -19,9 +19,8 @@ export default function StepTwo({ methods }: StepTwoProps) {
       transition={{ duration: 0.4 }}
       className="space-y-6"
     >
-      {/* Section Title */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+        <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
           <Stethoscope className="w-6 h-6 text-white" />
         </div>
         <div>
@@ -34,7 +33,6 @@ export default function StepTwo({ methods }: StepTwoProps) {
         </div>
       </div>
 
-      {/* 1. Medical Condition Input */}
       <div>
         <CustomFormField
           control={control}
@@ -48,7 +46,6 @@ export default function StepTwo({ methods }: StepTwoProps) {
         </p>
       </div>
 
-      {/* 2. Symptoms Textarea */}
       <CustomFormField
         control={control}
         fieldType={FormFieldType.TEXTAREA}
@@ -57,19 +54,8 @@ export default function StepTwo({ methods }: StepTwoProps) {
         placeholder="Describe your symptoms in detail..."
       />
 
-      {/* 3. Quick Add Symptoms Component */}
       <QuickAddSymptoms methods={methods} />
 
-      {/* 4. Reason for Seeking Treatment */}
-      {/* <CustomFormField
-        control={control}
-        fieldType={FormFieldType.TEXTAREA}
-        name="seekingReason"
-        label="Why are you seeking cannabis-based treatment?"
-        placeholder="Please explain why you believe cannabis-based medicine may help your condition, what other treatments you've tried, and what you hope to achieve..."
-      /> */}
-
-      {/* 5. Medical History (Optional) */}
       <CustomFormField
         control={control}
         fieldType={FormFieldType.TEXTAREA}

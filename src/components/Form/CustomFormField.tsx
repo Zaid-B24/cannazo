@@ -1,9 +1,3 @@
-import type { E164Number } from "libphonenumber-js/core";
-
-import PhoneInput from "react-phone-number-input";
-
-import "react-datepicker/dist/react-datepicker.css";
-
 import { FormFieldType, type CustomProps } from "@/lib/types";
 import {
   FormControl,
@@ -25,8 +19,15 @@ import { CalendarIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
+import type { ControllerRenderProps, FieldValues } from "react-hook-form";
 
-const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
+const RenderInput = ({
+  field,
+  props,
+}: {
+  field: ControllerRenderProps<FieldValues, string>;
+  props: CustomProps;
+}) => {
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -51,20 +52,6 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           />
         </FormControl>
       );
-    case FormFieldType.PHONE_INPUT:
-      return (
-        <FormControl>
-          <PhoneInput
-            defaultCountry="IN"
-            placeholder={props.placeholder}
-            international
-            withCountryCallingCode
-            value={field.value as E164Number | undefined}
-            onChange={field.onChange}
-            className="input-phone"
-          />
-        </FormControl>
-      );
     case FormFieldType.CHECKBOX:
       return (
         <FormControl>
@@ -80,7 +67,14 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           </div>
         </FormControl>
       );
-    case FormFieldType.DATE_PICKER:
+    case FormFieldType.DATE_PICKER: {
+      const today = new Date();
+      const eighteenYearsAgo = new Date(
+        today.getFullYear() - 21,
+        today.getMonth(),
+        today.getDate()
+      );
+      const isDob = props.name === "date_of_birth";
       return (
         <div className="flex w-full items-center">
           <Popover>
@@ -95,7 +89,6 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
                 >
                   <CalendarIcon className="mr-2 h-4 w-4 opacity-50" />
                   {field.value ? (
-                    // Format the date object for display (e.g., using date-fns or native Date methods)
                     field.value instanceof Date &&
                     !isNaN(field.value.getTime()) ? (
                       field.value.toLocaleDateString("en-US", {
@@ -116,19 +109,25 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               <Calendar
                 mode="single"
                 selected={field.value}
-                captionLayout="dropdown" // Use dropdown style for quick month/year selection
-                onSelect={field.onChange} // RHF registration handles change
+                captionLayout="dropdown"
+                onSelect={field.onChange}
                 initialFocus
                 fromYear={1900}
-                toYear={new Date().getFullYear()}
+                toYear={
+                  isDob
+                    ? eighteenYearsAgo.getFullYear()
+                    : new Date().getFullYear()
+                }
                 disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
+                  date > (isDob ? eighteenYearsAgo : new Date()) ||
+                  date < new Date("1900-01-01")
                 }
               />
             </PopoverContent>
           </Popover>
         </div>
       );
+    }
     case FormFieldType.SELECT:
       return (
         <FormControl>

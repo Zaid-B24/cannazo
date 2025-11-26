@@ -2,7 +2,7 @@ import { User, Download, XCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import CustomFormField from "./CustomFormField";
 import { FormFieldType, type PatientFormData } from "@/lib/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { type UseFormReturn } from "react-hook-form";
 import { SelectItem } from "../ui/select";
 
@@ -11,21 +11,22 @@ interface StepOneProps {
 }
 
 export default function StepOne({ methods }: StepOneProps) {
-  const { control, setValue, getValues } = methods;
+  const { control } = methods;
 
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const file = methods.watch("aadhaar_image_url");
+  const previewUrl = useMemo(() => {
+    if (!file) return null;
+
+    return URL.createObjectURL(file);
+  }, [file]);
+
   useEffect(() => {
-    const file = getValues("aadhaar_image_url");
-    if (file && file instanceof File) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  }, [getValues]);
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -33,23 +34,17 @@ export default function StepOne({ methods }: StepOneProps) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
-      setValue("aadhaar_image_url", file, { shouldValidate: true });
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      methods.setValue("aadhaar_image_url", file, { shouldValidate: true });
     } else {
-      setValue("aadhaar_image_url", undefined);
-      setImagePreviewUrl(null);
+      methods.setValue("aadhaar_image_url", undefined);
     }
   };
 
-  const handleRemoveImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setValue("aadhaar_image_url", undefined, { shouldValidate: true });
-    setImagePreviewUrl(null);
+  const handleRemoveImage = () => {
+    methods.setValue("aadhaar_image_url", undefined, { shouldValidate: true });
+
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -168,11 +163,11 @@ export default function StepOne({ methods }: StepOneProps) {
           Upload Aadhaar Card Image
         </label>
 
-        {imagePreviewUrl ? (
+        {previewUrl ? (
           // Display image preview if available
           <div className="relative w-full h-64 overflow-hidden rounded-lg border-2 border-dashed border-gray-300 group">
             <img
-              src={imagePreviewUrl}
+              src={previewUrl}
               alt="Aadhaar Preview"
               className="w-full h-full object-cover"
             />

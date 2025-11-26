@@ -51,15 +51,10 @@ const cardVariants: Variants = {
 
 export default function Footer() {
   return (
-    <section className="max-w-5xl mx-auto mt-16 mb-8 px-4 md:px-8 relative z-10">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent"
-      >
+    <section className="max-w-5xl mx-auto mt-16 mb-8 px-4 md:px-8 relative z-10 overflow-hidden">
+      <h2 className="text-3xl font-bold text-center mb-8 bg-linear-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent">
         Why Choose Cannazo India?
-      </motion.h2>
+      </h2>
 
       <motion.div
         variants={containerVariants}

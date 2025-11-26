@@ -1,13 +1,5 @@
-// src/components/BackgroundElements.tsx
-
 import { motion } from "framer-motion";
-
 const LEAF_TYPES = ["🌿", "🍃", "☘️", "🌱"];
-
-// --- GENERATE DATA OUTSIDE THE COMPONENT ---
-// This runs once when the page loads.
-// It creates a stable, static array of random leaves.
-// This satisfies React's strict "Purity" rules completely.
 const leaves = Array.from({ length: 20 }).map((_, i) => {
   const initialX = Math.random() * 100;
   return {
@@ -25,7 +17,6 @@ const leaves = Array.from({ length: 20 }).map((_, i) => {
 export default function BackgroundElements() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* The component just maps the pre-calculated array. Zero calculation during render. */}
       {leaves.map((leaf) => (
         <motion.div
           key={leaf.id}
@@ -55,8 +46,6 @@ export default function BackgroundElements() {
           {leaf.emoji}
         </motion.div>
       ))}
-
-      {/* Static Background Elements */}
       <div className="absolute top-10 left-10 text-6xl opacity-5 text-green-800 select-none">
         🌿
       </div>

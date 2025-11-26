@@ -1,81 +1,14 @@
+import { SYMPTOM_CATEGORIES } from "@/lib/symptoms";
+import type { PatientFormData } from "@/lib/types";
+import { Plus } from "lucide-react";
 import { useCallback } from "react";
-import {
-  Plus,
-  Link,
-  Activity,
-  Brain,
-  Utensils,
-  AlertCircle,
-} from "lucide-react";
+import type { UseFormReturn } from "react-hook-form";
 
-// Data structure matching your screenshot exactly
-const SYMPTOM_CATEGORIES = [
-  {
-    title: "Pain & Inflammation",
-    icon: Link,
-    color: "text-indigo-500",
-    symptoms: [
-      "Chronic Pain",
-      "Arthritis",
-      "Back Pain",
-      "Joint Pain",
-      "Muscle Spasms",
-      "Migraine",
-      "Neuropathic Pain",
-    ],
-  },
-  {
-    title: "Mental Health & Sleep",
-    icon: Activity, // Or Brain
-    color: "text-purple-500",
-    symptoms: [
-      "Anxiety",
-      "Depression",
-      "PTSD",
-      "Insomnia",
-      "Panic Disorder",
-      "Stress",
-    ],
-  },
-  {
-    title: "Neurological Conditions",
-    icon: Brain,
-    color: "text-blue-500",
-    symptoms: [
-      "Epilepsy",
-      "Multiple Sclerosis",
-      "Parkinson's Disease",
-      "Tremors",
-      "Neuropathy",
-    ],
-  },
-  {
-    title: "Digestive Issues",
-    icon: Utensils,
-    color: "text-orange-500",
-    symptoms: [
-      "Nausea",
-      "Vomiting",
-      "Loss of Appetite",
-      "IBS",
-      "Crohn's Disease",
-    ],
-  },
-  {
-    title: "Other Medical Conditions",
-    icon: AlertCircle,
-    color: "text-green-500",
-    symptoms: [
-      "Glaucoma",
-      "Chemotherapy Side Effects",
-      "Cancer Pain",
-      "HIV/AIDS Symptoms",
-      "ADHD",
-    ],
-  },
-];
-
-export default function QuickAddSymptoms({ methods }: { methods: any }) {
+export default function QuickAddSymptoms({
+  methods,
+}: {
+  methods: UseFormReturn<PatientFormData>;
+}) {
   const handleSymptomAdd = useCallback(
     (symptom: string) => {
       // 1. Get current value from the 'symptoms' field

@@ -1,27 +1,19 @@
-// src/components/StepThree.tsx
-
-import { CircleCheckBig, FileText, Loader2 } from "lucide-react";
+import { CircleCheckBig, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import CustomFormField from "./CustomFormField";
 import { FormFieldType, type PatientFormData } from "@/lib/types";
 import type { UseFormReturn } from "react-hook-form";
 import { useMemo } from "react";
+import { PRODUCTS } from "@/lib/products";
 
 interface StepThreeProps {
-  methods: UseFormReturn<PatientFormData>; // No more 'any'
-  isSubmitting: boolean;
-  setCurrentStep: (step: number) => void;
-  onSubmit: () => void;
+  methods: UseFormReturn<PatientFormData>;
 }
 
-export default function StepThree({
-  methods,
-  isSubmitting,
-  setCurrentStep,
-  onSubmit,
-}: StepThreeProps) {
-  const { control, getValues } = methods;
-  const values = getValues();
+export default function StepThree({ methods }: StepThreeProps) {
+  const { control } = methods;
+  const selectedProducts = methods.watch("selectedProducts") || [];
+  const values = methods.watch();
 
   const age = useMemo(() => {
     const dob = values.date_of_birth;
@@ -31,7 +23,6 @@ export default function StepThree({
     let age = today.getFullYear() - dob.getFullYear();
     const m = today.getMonth() - dob.getMonth();
 
-    // Adjust if birthday hasn't happened yet this year
     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
@@ -47,7 +38,7 @@ export default function StepThree({
     >
       {/* 1. Header (Purple/Pink Theme) */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-200">
+        <div className="w-12 h-12 bg-linear-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-200">
           <CircleCheckBig className="w-6 h-6 text-white" />
         </div>
         <div>
@@ -184,37 +175,29 @@ export default function StepThree({
               <p className="text-gray-600">{values.symptoms}</p>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* 4. Navigation Buttons (Specific to Step 3) */}
-      <div className="flex justify-between gap-4 mt-8 pt-4">
-        <motion.button
-          type="button"
-          onClick={() => setCurrentStep(2)}
-          whileHover={{ scale: 1.05 }}
-          className="px-6 py-3 w-full text-lg font-semibold text-gray-600 border border-gray-300 rounded-lg bg-white transition-all shadow-sm"
-        >
-          ← Previous
-        </motion.button>
-
-        <motion.button
-          type="button"
-          onClick={onSubmit}
-          disabled={isSubmitting}
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
-          className="px-6 py-3 w-full text-lg font-semibold text-white rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:from-emerald-600 hover:to-green-600 transition-all duration-200 shadow-lg shadow-green-300/50 disabled:bg-gray-400 flex items-center justify-center gap-2"
-        >
-          {isSubmitting ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
-          ) : (
+          {selectedProducts.length > 0 && (
             <>
-              <CircleCheckBig className="w-5 h-5" />
-              Submit Request
+              <hr className="border-dashed border-gray-200" />
+
+              <div>
+                <span className="block text-xs font-bold text-gray-900 uppercase mb-1">
+                  Selected Products
+                </span>
+                <ul className="list-disc ml-5 text-gray-700 space-y-1 text-sm">
+                  {selectedProducts.map((id) => {
+                    const product = PRODUCTS.find((p) => p.id === id);
+                    return (
+                      <li key={id}>
+                        {product ? product.name : `Product #${id}`}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </>
           )}
-        </motion.button>
+        </div>
       </div>
     </motion.div>
   );
