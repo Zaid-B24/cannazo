@@ -10,6 +10,7 @@ export const FormFieldType = {
   DATE_PICKER: "datePicker",
   SELECT: "select",
   SKELETON: "skeleton",
+  NUMBER: "number"
 } as const;
 
 export type FormFieldType = (typeof FormFieldType)[keyof typeof FormFieldType];
@@ -25,6 +26,7 @@ export interface CustomProps {
   disabled?: boolean;
   dateFormat?: string;
   showTimeSelect?: boolean;
+  required?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: ControllerRenderProps<FieldValues, string>) => React.ReactNode;
   fieldType: FormFieldType;
@@ -33,12 +35,14 @@ export interface CustomProps {
 
 export const PatientFormValidation = z.object({
   name: z.string().min(3, "Full Name is required."),
-  email: z.string().email("Invalid email address."),
+  email: z.email("Invalid email address."),
   phone: z.string().min(10, "Phone number is required."),
   gender: z.enum(["Male", "Female", "Other"]),
   weight: z.string().optional(),
   height: z.string().optional(),
-  aadhaar_number: z.string().length(12, "Aadhaar must be 12 digits."),
+  aadhaar_number: z.string().optional().refine((val) => !val || val.length === 12, {
+    message: "Aadhaar must be exactly 12 digits",
+  }),
   date_of_birth: z.date(),
   address: z.string().optional(),
   aadhaar_image_url: z.any().optional(),
@@ -55,3 +59,5 @@ export const PatientFormValidation = z.object({
 });
 
 export type PatientFormData = z.infer<typeof PatientFormValidation>;
+
+//Aadhaar number compulsory//length(12, "Aadhaar must be 12 digits.")

@@ -78,6 +78,7 @@ export default function StepOne({ methods }: StepOneProps) {
           name="name"
           label="Full Name"
           placeholder="Enter your full name"
+          required
         />
 
         <CustomFormField
@@ -86,14 +87,16 @@ export default function StepOne({ methods }: StepOneProps) {
           name="email"
           label="Email Address"
           placeholder="your.email@example.com"
+          required
         />
 
         <CustomFormField
           control={control}
-          fieldType={FormFieldType.INPUT}
+          fieldType={FormFieldType.NUMBER}
           name="phone"
           label="Phone Number"
-          placeholder="+91-9876543210"
+          placeholder="9876543210"
+          required
         />
 
         <CustomFormField
@@ -102,6 +105,7 @@ export default function StepOne({ methods }: StepOneProps) {
           name="date_of_birth"
           label="Date of Birth"
           dateFormat="dd/MM/yyyy"
+          required
         />
 
         <CustomFormField
@@ -110,6 +114,7 @@ export default function StepOne({ methods }: StepOneProps) {
           name="gender"
           label="Gender"
           placeholder="Select Gender"
+          required
         >
           <SelectItem value="Male">Male</SelectItem>
           <SelectItem value="Female">Female</SelectItem>
@@ -120,7 +125,7 @@ export default function StepOne({ methods }: StepOneProps) {
           <div className="flex-1">
             <CustomFormField
               control={control}
-              fieldType={FormFieldType.INPUT}
+              fieldType={FormFieldType.NUMBER}
               name="weight"
               label="Weight (kg)"
               placeholder="Ex: 70"
@@ -129,7 +134,7 @@ export default function StepOne({ methods }: StepOneProps) {
           <div className="flex-1">
             <CustomFormField
               control={control}
-              fieldType={FormFieldType.INPUT}
+              fieldType={FormFieldType.NUMBER}
               name="height"
               label="Height (cm)"
               placeholder="Ex: 175"
@@ -150,7 +155,7 @@ export default function StepOne({ methods }: StepOneProps) {
         <div className="col-span-1 md:col-span-2">
           <CustomFormField
             control={control}
-            fieldType={FormFieldType.INPUT}
+            fieldType={FormFieldType.NUMBER}
             name="aadhaar_number"
             label="Aadhaar Number"
             placeholder="XXXX-XXXX-XXXX"

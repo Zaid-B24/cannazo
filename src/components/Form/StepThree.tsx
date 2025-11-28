@@ -54,6 +54,7 @@ export default function StepThree({ methods }: StepThreeProps) {
       {/* 2. Consent Checkbox */}
       <CustomFormField
         control={control}
+        required
         fieldType={FormFieldType.CHECKBOX}
         name="consent"
         label="I consent to share my medical information with licensed doctors and medical staff at Cannazo India for the purpose of medical consultation and treatment. I understand that my information will be kept confidential and used only for medical purposes. *"
@@ -62,6 +63,7 @@ export default function StepThree({ methods }: StepThreeProps) {
       <div className="mt-4">
         <CustomFormField
           control={control}
+          required
           fieldType={FormFieldType.CHECKBOX}
           name="ageConsent"
           label="I certify that I am at least 21 years of age and voluntarily seek this medical consultation, understanding the nature of the treatment."

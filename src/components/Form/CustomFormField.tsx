@@ -41,6 +41,19 @@ const RenderInput = ({
           </FormControl>
         </div>
       );
+    case FormFieldType.NUMBER:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+          <FormControl>
+            <Input
+              type="number"
+              placeholder={props.placeholder}
+              {...field}
+              className="shad-input border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+          </FormControl>
+        </div>
+      );
     case FormFieldType.TEXTAREA:
       return (
         <FormControl>
@@ -160,7 +173,10 @@ const CustomFormField = (props: CustomProps) => {
       render={({ field }) => (
         <FormItem className="flex-1">
           {props.fieldType !== FormFieldType.CHECKBOX && label && (
-            <FormLabel className="shad-input-label">{label}</FormLabel>
+            <FormLabel className="shad-input-label">
+              {label}
+              {props.required && <span className="text-red-500 ml-1">*</span>}
+            </FormLabel>
           )}
           <RenderInput field={field} props={props} />
 

@@ -1,10 +1,4 @@
-import {
-  CircleCheckBig,
-  Stethoscope,
-  User,
-  ShoppingBag,
-  Check,
-} from "lucide-react";
+import { CircleCheckBig, Stethoscope, User, ShoppingBag } from "lucide-react";
 
 export const Stepper = ({ step }: { step: number }) => {
   const totalSteps = 4;
@@ -27,7 +21,7 @@ export const Stepper = ({ step }: { step: number }) => {
       id: 3,
       label: "Products",
       ActiveIcon: ShoppingBag,
-      CompleteIcon: Check,
+      CompleteIcon: CircleCheckBig,
     },
     {
       id: 4,

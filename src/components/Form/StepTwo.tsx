@@ -37,6 +37,7 @@ export default function StepTwo({ methods }: StepTwoProps) {
         <CustomFormField
           control={control}
           fieldType={FormFieldType.INPUT}
+          required
           name="medicalCondition"
           label="Medical Condition"
           placeholder="Enter your primary medical condition (e.g., Chronic Pain, Anxiety, Epilepsy)"

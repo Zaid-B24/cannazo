@@ -125,7 +125,7 @@ export default function PatientForm() {
   }, [currentStep, trigger, getValues, errors]);
 
   const SuccessScreen = () => (
-    <div className="flex flex-col items-center justify-center py-12 text-center space-y-4 animate-in fade-in zoom-in duration-300">
+    <div className="flex flex-col items-center justify-center py-12 text-center space-y-4 ">
       <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
         <CircleCheckBig className="w-10 h-10 text-green-600" />
       </div>
