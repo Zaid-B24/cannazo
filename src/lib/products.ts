@@ -18,7 +18,7 @@ export const PRODUCTS: Product[] = [
     name: "Placidol (Pure CBD)",
     description: "A pure CBD formulation designed to offer neuroprotective, anti-epileptic, and calming benefits without any psychoactive effects. Ideal for pediatric ASD, epilepsy, and anxiety.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/1.png",
     tags: [
       "Pediatric ASD",
       "Epilepsy",
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
     name: "Vijaya Amrit (High CBD)",
     description: "A high-CBD, low-THC formulation designed to deliver strong anti-anxiety, anti-depressant, and mood-stabilizing benefits without sedation.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/2.png",
     tags: [
       "Adult Epilepsy",
       "Anxiety",
@@ -53,7 +53,7 @@ export const PRODUCTS: Product[] = [
     name: "Calm Drops",
     description: "Combines a balanced 2:1 CBD–THC formula with soothing bergamot to ease daily stress, anxiety, and fatigue.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/3.png",
     tags: [
       "Daily stress",
       "Anxiety",
@@ -68,7 +68,7 @@ export const PRODUCTS: Product[] = [
     name: "Elevate: Full Spectrum CBD:THC (1:1)",
     description: "A balanced 1:1 CBD–THC formula that effectively reduces mild to moderate pain, muscle stiffness, and inflammation.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/4.png",
     tags: [
       "Mild–moderate pain",
       "Inflammation",
@@ -83,7 +83,7 @@ export const PRODUCTS: Product[] = [
     name: "Brain Easer",
     description: "A synergistic herbal–cannabinoid formula with Valerian and Melatonin to promote deep, natural sleep and reset circadian rhythm.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/5.png",
     tags: [
       "Insomnia",
       "Sleep disturbances",
@@ -97,7 +97,7 @@ export const PRODUCTS: Product[] = [
     name: "Vijaya Ambrosia (High THC 1:4)",
     description: "A THC-dominant formulation crafted for powerful pain relief, improved appetite, and deep, uninterrupted sleep.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/6.png",
     tags: [
       "Chronic pain",
       "Cancer pain",
@@ -115,7 +115,7 @@ export const PRODUCTS: Product[] = [
     name: "Uplift THC Drops",
     description: "A THC-dominant full spectrum formula that uplifts mood, eases cravings, anxiety & pain relief and smoothens withdrawal symptoms.",
     category: "Tincture",
-    image: "/vijaya.webp",
+    image: "/7.png",
     tags: [
       "De-addiction",
       "De-alcoholism",
@@ -134,7 +134,7 @@ export const PRODUCTS: Product[] = [
     name: "Uplift Extract (THC dominant)",
     description: "Offers a calming, relaxing high that helps unwind, improves sleep, and provides relief from chronic pain and withdrawal.",
     category: "Extract",
-    image: "/vijaya.webp",
+    image: "/8.png",
     tags: [
       "De-addiction",
       "Alcohol withdrawal",
@@ -153,7 +153,7 @@ export const PRODUCTS: Product[] = [
     name: "Cannaronil",
     description: "A highly potent full-spectrum Vijaya formulation offering powerful pain relief, deep sedation, and strong antiemetic support.",
     category: "Extract",
-    image: "/vijaya.webp",
+    image: "/9.png",
     tags: [
       "Cancer pain",
       "Severe inflammation",
@@ -168,7 +168,7 @@ export const PRODUCTS: Product[] = [
     name: "CBD Nano CannaRonil (Nebulization)",
     description: "Engineered for nebulization to cross the Blood–Brain Barrier for targeted therapeutic action on lungs and respiratory issues.",
     category: "Extract",
-    image: "/vijaya.webp",
+    image: "/9.png",
     tags: [
       "Respiratory issues",
       "Lung cleansing",
@@ -185,7 +185,7 @@ export const PRODUCTS: Product[] = [
     name: "Full Spectrum Capsules",
     description: "THC-rich medicine consisting of anti-inflammatory properties for pain and sleep.",
     category: "Capsules",
-    image: "/vijaya.webp",
+    image: "/10.png",
     tags: [
       "Chronic pain",
       "Inflammation",
@@ -200,7 +200,7 @@ export const PRODUCTS: Product[] = [
     name: "Trilokya Vijaya Vati",
     description: "Classic Ayurvedic formulation for pain relief and Vata balancing.",
     category: "Tablets",
-    image: "/vijaya.webp",
+    image: "/11.png",
     tags: [
       "Arthritis pain",
       "Muscle stiffness",

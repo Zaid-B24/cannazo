@@ -68,12 +68,11 @@ export default function StepProducts() {
     return (
       <motion.div
         layout
-        onClick={() => toggleProduct(product.id)}
-        className={`cursor-pointer border-2 rounded-xl overflow-hidden relative flex flex-col h-full transition-all
+        className={`cursor-default border-2 rounded-xl overflow-hidden relative flex flex-col h-full min-h-[420px] transition-all
           ${
             isSelected
               ? "border-green-600 bg-green-50 shadow-md"
-              : "border-gray-200 bg-white hover:border-green-300 hover:shadow-sm"
+              : "border-gray-200 bg-white hover:border-green-300 hover:shadow-lg hover:-translate-y-1"
           }`}
       >
         {isRecommended && (
@@ -81,11 +80,11 @@ export default function StepProducts() {
             Recommended for you
           </div>
         )}
-        <div className="h-40 bg-gray-100 relative">
+        <div className="h-52 md:h-64 bg-gray-100 relative">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
           {isSelected && (
             // Simple fade for checkmark icon
@@ -112,13 +111,14 @@ export default function StepProducts() {
               </span>
             ))}
           </div>
-          <p className="text-sm text-gray-500 line-clamp-2 mb-4 leading-relaxed">
+          <p className="text-sm text-gray-500 line-clamp-2 mb-6 leading-relaxed">
             {product.description}
           </p>
 
           <button
             type="button"
-            className={`w-full py-2 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-colors mt-auto
+            onClick={() => toggleProduct(product.id)}
+            className={`w-full py-2 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-colors mt-auto cursor-pointer
               ${
                 isSelected
                   ? "bg-green-600 text-white shadow-sm"
