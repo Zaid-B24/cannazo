@@ -168,7 +168,7 @@ export const PRODUCTS: Product[] = [
     name: "CBD Nano CannaRonil (Nebulization)",
     description: "Engineered for nebulization to cross the Blood–Brain Barrier for targeted therapeutic action on lungs and respiratory issues.",
     category: "Extract",
-    image: "/9.png",
+    image: "/10.png",
     tags: [
       "Respiratory issues",
       "Lung cleansing",
@@ -185,7 +185,7 @@ export const PRODUCTS: Product[] = [
     name: "Full Spectrum Capsules",
     description: "THC-rich medicine consisting of anti-inflammatory properties for pain and sleep.",
     category: "Capsules",
-    image: "/10.png",
+    image: "/11.png",
     tags: [
       "Chronic pain",
       "Inflammation",
@@ -200,7 +200,7 @@ export const PRODUCTS: Product[] = [
     name: "Trilokya Vijaya Vati",
     description: "Classic Ayurvedic formulation for pain relief and Vata balancing.",
     category: "Tablets",
-    image: "/11.png",
+    image: "/12.png",
     tags: [
       "Arthritis pain",
       "Muscle stiffness",

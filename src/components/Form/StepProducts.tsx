@@ -1,28 +1,116 @@
 import { type Product } from "@/lib/products";
-import { useMemo, useState } from "react";
+import { useMemo, useState, memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { Check, Plus } from "lucide-react";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { getRecommendations } from "@/lib/getRecommendations";
 
 const CATEGORIES = ["All", "Tincture", "Extract", "Capsules", "Tablets"];
 
-const contentVariants: Variants = {
-  hidden: { opacity: 0, y: 20 }, // Start slightly below and invisible
+const simpleFade = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.25, 0.1, 0.25, 1.0] as const,
-    },
+    transition: { duration: 0.3 }, // Fast, standard timing
   },
   exit: {
     opacity: 0,
-    y: -10, // Move slightly up while fading out
-    transition: { duration: 0.2, ease: "easeIn" },
+    transition: { duration: 0.2 },
   },
 };
+
+// ✅ FIX 1: Move ProductCard OUTSIDE the main component
+// ✅ FIX 2: Use memo() so cards don't re-render unless their specific data changes
+const ProductCard = memo(
+  ({
+    product,
+    isRecommended,
+    isSelected,
+    onToggle,
+  }: {
+    product: Product;
+    isRecommended?: boolean;
+    isSelected: boolean;
+    onToggle: (id: string) => void;
+  }) => {
+    return (
+      <div
+        className={`cursor-default border-2 rounded-xl overflow-hidden relative flex flex-col h-full min-h-[420px] transition-all
+        ${
+          isSelected
+            ? "border-green-600 bg-green-50 shadow-md"
+            : "border-gray-200 bg-white hover:border-green-300 hover:shadow-lg hover:-translate-y-1"
+        }`}
+      >
+        {isRecommended && (
+          <div className="bg-amber-100 text-amber-800 text-[10px] font-bold px-3 py-1 text-center">
+            Recommended for you
+          </div>
+        )}
+        <div className="h-52 md:h-64 bg-gray-100 relative">
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-contain"
+          />
+          {isSelected && (
+            <div
+              className={`absolute inset-0 bg-green-600/20 flex items-center justify-center transition-opacity duration-200 ${
+                isSelected ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div className="bg-white p-2 rounded-full shadow">
+                <Check className="text-green-600 w-6 h-6" />
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="p-4 flex flex-col flex-1">
+          <h3 className="font-bold text-gray-900">{product.name}</h3>
+          <div className="flex flex-wrap gap-1 my-2">
+            {product.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="text-[10px] bg-gray-100 px-2 py-1 rounded text-gray-600"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <p className="text-sm text-gray-500 line-clamp-2 mb-6 leading-relaxed">
+            {product.description}
+          </p>
+
+          <button
+            type="button"
+            onClick={() => onToggle(product.id)}
+            // ⚡ Pure CSS transition for button interactions
+            className={`w-full py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-colors duration-200 mt-auto active:scale-[0.98]
+            ${
+              isSelected
+                ? "bg-green-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-green-50 hover:text-green-700"
+            }`}
+          >
+            {isSelected ? (
+              <>
+                Added <Check className="w-4 h-4" />
+              </>
+            ) : (
+              <>
+                Add <Plus className="w-4 h-4" />
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    );
+  }
+);
+// Display name for debugging
+ProductCard.displayName = "ProductCard";
 
 export default function StepProducts() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -57,88 +145,6 @@ export default function StepProducts() {
     setValue("selectedProducts", current, { shouldValidate: true });
   };
 
-  const ProductCard = ({
-    product,
-    isRecommended,
-  }: {
-    product: Product;
-    isRecommended?: boolean;
-  }) => {
-    const isSelected = selectedIds.includes(product.id);
-    return (
-      <motion.div
-        layout
-        className={`cursor-default border-2 rounded-xl overflow-hidden relative flex flex-col h-full min-h-[420px] transition-all
-          ${
-            isSelected
-              ? "border-green-600 bg-green-50 shadow-md"
-              : "border-gray-200 bg-white hover:border-green-300 hover:shadow-lg hover:-translate-y-1"
-          }`}
-      >
-        {isRecommended && (
-          <div className="bg-amber-100 text-amber-800 text-[10px] font-bold px-3 py-1 text-center">
-            Recommended for you
-          </div>
-        )}
-        <div className="h-52 md:h-64 bg-gray-100 relative">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-contain"
-          />
-          {isSelected && (
-            // Simple fade for checkmark icon
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="absolute inset-0 bg-green-600/20 flex items-center justify-center"
-            >
-              <div className="bg-white p-2 rounded-full shadow">
-                <Check className="text-green-600 w-6 h-6" />
-              </div>
-            </motion.div>
-          )}
-        </div>
-        <div className="p-4 flex flex-col flex-1">
-          <h3 className="font-bold text-gray-900">{product.name}</h3>
-          <div className="flex flex-wrap gap-1 my-2">
-            {product.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="text-[10px] bg-gray-100 px-2 py-1 rounded text-gray-600"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <p className="text-sm text-gray-500 line-clamp-2 mb-6 leading-relaxed">
-            {product.description}
-          </p>
-
-          <button
-            type="button"
-            onClick={() => toggleProduct(product.id)}
-            className={`w-full py-2 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-colors mt-auto cursor-pointer
-              ${
-                isSelected
-                  ? "bg-green-600 text-white shadow-sm"
-                  : "bg-gray-100 text-gray-600 group-hover:bg-green-50 group-hover:text-green-700"
-              }`}
-          >
-            {isSelected ? (
-              <>
-                Added <Check className="w-4 h-4 stroke-[3px]" />
-              </>
-            ) : (
-              <>
-                Add Product <Plus className="w-4 h-4 stroke-[3px]" />
-              </>
-            )}
-          </button>
-        </div>
-      </motion.div>
-    );
-  };
   return (
     <div className="space-y-6 ">
       <div className="text-center">
@@ -146,6 +152,7 @@ export default function StepProducts() {
         <div className="flex flex-wrap justify-center gap-2 mb-6">
           {CATEGORIES.map((cat) => (
             <button
+              type="button" // Always good to be explicit
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
@@ -168,12 +175,12 @@ export default function StepProducts() {
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={selectedCategory} // Key change triggers the animation
-          variants={contentVariants}
+          key={selectedCategory}
+          variants={simpleFade}
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="space-y-8" // Added spacing between sections
+          className="space-y-8"
         >
           {/* Recommended Section */}
           {recommended.length > 0 && (
@@ -181,10 +188,15 @@ export default function StepProducts() {
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 Based on your symptoms
               </h3>
-              {/* Removed inner AnimatePresence */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {recommended.map((p) => (
-                  <ProductCard key={p.id} product={p} isRecommended />
+                  <ProductCard
+                    key={p.id}
+                    product={p}
+                    isRecommended
+                    isSelected={selectedIds.includes(p.id)}
+                    onToggle={toggleProduct}
+                  />
                 ))}
               </div>
             </div>
@@ -197,10 +209,14 @@ export default function StepProducts() {
                 Other available medicines
               </h3>
             )}
-            {/* Removed inner AnimatePresence */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {others.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  isSelected={selectedIds.includes(p.id)}
+                  onToggle={toggleProduct}
+                />
               ))}
             </div>
 

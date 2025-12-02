@@ -213,8 +213,12 @@ export default function PatientForm() {
   return (
     <FormProvider {...methods}>
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, y: 40 },
+          visible: { opacity: 1, y: 0 },
+        }}
         transition={{ duration: 0.6, delay: 0.2 }}
         className="w-full rounded-lg shadow-2xl border-0 bg-white/95 backdrop-blur-xl overflow-hidden mb-16"
       >
@@ -235,18 +239,10 @@ export default function PatientForm() {
             <SuccessScreen />
           ) : (
             <form onSubmit={(e) => e.preventDefault()}>
-              <div className={currentStep === 1 ? "block" : "hidden"}>
-                <StepOne methods={methods} />
-              </div>
-              <div className={currentStep === 2 ? "block" : "hidden"}>
-                <StepTwo methods={methods} />
-              </div>
-              <div className={currentStep === 3 ? "block" : "hidden"}>
-                <StepProducts />
-              </div>
-              <div className={currentStep === 4 ? "block" : "hidden"}>
-                <StepThree methods={methods} />
-              </div>
+              {currentStep === 1 && <StepOne methods={methods} />}
+              {currentStep === 2 && <StepTwo methods={methods} />}
+              {currentStep === 3 && <StepProducts />}
+              {currentStep === 4 && <StepThree methods={methods} />}
               <RenderNavigation />
             </form>
           )}
